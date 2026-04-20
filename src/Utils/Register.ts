@@ -1,15 +1,12 @@
-import { useState } from "react";
-
 export interface UserRegisterRequest {
   name: string;
   age: number;
   region: string;
   mbti: string;
   hobbies: string[];
-  matchdistance: string[];
-  selctAge: number
+  meetingStations: MeetingWantCategory[];
+  selectAge: number;
 }
-
 
 export interface UserRegisterResponse {
   message: string;
@@ -18,28 +15,43 @@ export interface UserRegisterResponse {
   region: string;
   mbti: string;
   hobbies: string[];
-  matchdistance: string[];
+  meetingStations: MeetingWantCategory[];
   selectAge: number;
 }
 
- export type HobbyCategory = 
+export type MeetingWantCategory =
+  | "천안역"
+  | "두정역"
+  | "고속버스터미널"
+  | "영등포역"
+  | "백석대학교";
+
+export const MEETING_STATION_CATEGORIES: MeetingWantCategory[] = [
+  "천안역",
+  "두정역",
+  "고속버스터미널",
+  "영등포역",
+  "백석대학교",
+];
+
+export type HobbyCategory =
   | "운동"
   | "독서"
   | "여행"
   | "음악"
   | "기타";
 
-export const HOBBY_CATEGORIES: HobbyCategory[] =[
+export const HOBBY_CATEGORIES: HobbyCategory[] = [
   "운동",
   "독서",
   "여행",
   "음악",
   "기타",
-]
+];
 
-export interface HobbyItem{
-    category : string;
-    note: string;
+export interface HobbyItem {
+  category: HobbyCategory;
+  note: string;
 }
 
 export const sendHobby = async (
@@ -54,14 +66,12 @@ export const sendHobby = async (
   });
 
   if (!response.ok) {
-    console.error("요청 실패");
-    throw new Error("요청 실패");
+    console.error("취미 요청 실패");
+    throw new Error("취미 요청 실패");
   }
 
   return await response.json();
 };
-
-
 
 export const registerUser = async (
   data: UserRegisterRequest
@@ -83,13 +93,12 @@ export const registerUser = async (
 
 export const getUsers = async (): Promise<UserRegisterResponse[]> => {
   const response = await fetch("http://127.0.0.1:8000/users", {
-    method: "GET"
-    
+    method: "GET",
   });
 
   if (!response.ok) {
     console.error("유저 데이터를 가져오지 못했습니다");
-    throw new Error("요청 조회 실패");
+    throw new Error("유저 조회 실패");
   }
 
   return await response.json();

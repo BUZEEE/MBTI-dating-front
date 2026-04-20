@@ -1,10 +1,5 @@
 
 
-interface props{
-    name: string;
-    distance: number;
-    matchRate: number;
-}
 
 interface Props {
   name: string;
