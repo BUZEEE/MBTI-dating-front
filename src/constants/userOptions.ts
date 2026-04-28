@@ -19,7 +19,7 @@ export const GRADE_OPTIONS: Grade[] = [
   "4학년",
 ];
 
-export const MEETING_STATION_OPTIONS: MeetingLocationCategory[] = [
+export const MEETING_LOCATION_OPTIONS: MeetingLocationCategory[] = [
   "천안역",
   "두정역",
   "고속버스터미널",

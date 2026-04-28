@@ -25,7 +25,7 @@ const MatchPage = () => {
 
       <h1 style={titleStyle}>추천 매칭</h1>
       <p style={subTitleStyle}>
-        {matchUsers[0]?.meetingStation}에서 만날 수 있는 분들
+        {matchUsers[0]?.meetingLocation}에서 만날 수 있는 분들
       </p>
 
       <div style={gridStyle}>

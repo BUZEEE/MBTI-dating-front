@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import {
   MBTI_OPTIONS,
   GRADE_OPTIONS,
-  MEETING_STATION_OPTIONS,
+  MEETING_LOCATION_OPTIONS,
   HOBBY_OPTIONS,
 } from "../constants/userOptions";
-import { registerUser } from "../api/matchApi";
+import { registerUser, getMatches } from "../api/matchApi";
 
 const UserRegisterCard = () => {
   const navigate = useNavigate();
@@ -42,15 +42,25 @@ const UserRegisterCard = () => {
   };
 
   const handleSubmit = async () => {
-    if (
-      !form.name ||
-      !form.mbti ||
-      !form.grade ||
-      !form.meetingLocation ||
-      !form.hobbyCategory
-    ) {
-      alert("필수값 입력하세요");
-      return;
+    if(!form.name){
+      alert("이름을 입력하세요");
+      return
+    }
+    if(!form.mbti){
+      alert("mbti를 선택해주세요");
+      return
+    }
+    if(!form.grade){
+      alert("학년을 선택해주세요")
+      return
+    }
+    if(!form.meetingLocation){
+      alert("데이트를 진행할 장소를 선택해주세요");
+      return
+    }
+    if(!form.hobbyCategory){
+      alert("취미 정보를 입력해주세여")
+       return
     }
 
     if (!form.agree) {
@@ -59,7 +69,8 @@ const UserRegisterCard = () => {
     }
 
     try {
-      const matchUsers = await registerUser(form);
+      const createdUser = await registerUser(form);
+      const matchUsers = await getMatches(createdUser.id);
       navigate("/match", { state: matchUsers });
     } catch (error) {
       console.error("회원 정보 전송 실패:", error);
@@ -103,12 +114,12 @@ const UserRegisterCard = () => {
       </select>
 
       <select
-        name="meetingStation"
+        name="meetingLocation"
         value={form.meetingLocation}
         onChange={handleChange}
       >
         <option value="">장소 선택</option>
-        {MEETING_STATION_OPTIONS.map((s) => (
+        {MEETING_LOCATION_OPTIONS.map((s) => (
           <option key={s} value={s}>
             {s}
           </option>
